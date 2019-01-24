@@ -2,7 +2,7 @@
 小型人力资源管理系统
 
 
-预览地址 账号nncq0002密码666666
+预览地址 账号admin密码666666
 [测试地址](http://www.chinahg.top/sunmoon/gotoLogin)
 
 ## 目录
