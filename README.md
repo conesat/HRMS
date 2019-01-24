@@ -24,8 +24,6 @@
 
 ![app](https://github.com/conesat/HRMS/blob/master/rec/REC3.gif)
 
-![app](https://github.com/conesat/HRMS/blob/master/rec/REC4.gif)
-
 ![app](https://github.com/conesat/HRMS/blob/master/rec/REC5.gif)
 
 ![app](https://github.com/conesat/HRMS/blob/master/rec/REC6.gif)
