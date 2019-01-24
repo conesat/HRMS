@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.FileDao">
+	<select id="getFilesByParentId"
+		resultType="com.nncq.sunmoon.entity.MyFile">
+		select * from
+		file
+		where
+		parent_id=#{id}
+	</select>
+
+	<insert id="addFile"
+		parameterType="com.nncq.sunmoon.entity.MyFile">
+		INSERT INTO
+		file(file_name,file_url,file_type,parent_id)
+		VALUES(#{file_name},#{file_url},#{file_type},#{parent_id});
+	</insert>
+</mapper>

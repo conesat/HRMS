@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+.map-search div input::-webkit-input-placeholder {
+	color: #e6e6e6;
+}
+
+.map-search div input::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #e6e6e6;
+}
+
+.map-search div input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #e6e6e6;
+}
+
+.map-search div input:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #e6e6e6;
+}
+
+input::-webkit-input-placeholder {
+	color: #968c8c;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #968c8c;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #968c8c;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #968c8c;
+}
+
+#addAddress-content {
+	display: none;
+}
+
+.layui-layout-admin .layui-body {
+	display: flex;
+	bottom: 0px;
+}
+
+.content {
+	margin: 0 auto;
+}
+
+.div-title {
+	margin-bottom: 10px;
+}
+
+.my-form-item {
+	text-align: center;
+}
+
+.my-button {
+	background-color: #0078d7 !important;
+}
+
+.layui-form-item {
+	display: flex;
+}
+
+.layui-form-item .layui-btn-group {
+	margin: 0 auto;
+}
+
+.layui-form-label {
+	padding-left: 0px;
+	padding-right: 0px;
+	width: auto;
+	color: #525252;
+}
+
+.layui-input-block {
+	margin-left: 10px;
+	flex: 1;
+}
+
+.layui-form-label-inner {
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 30px;
+}
+
+.layui-card-header {
+	padding-top: 10px;
+}
+
+#allmap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.tangram-suggestion-main {
+	z-index: 9999;
+}
+
+.map-tools {
+	line-height: 30px;
+}
+
+.map-search {
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 2px;
+	background-color: #1e9fff;
+	float: right;
+}
+
+.map-search div input {
+	width: 150px;
+	background-color: #1e9fff;
+	border: none;
+	box-shadow: none;
+	color: #fff;
+	line-height: 30px;
+}
+
+.map-search #searchResultPanel {
+	border: 1px solid #C0C0C0;
+	width: 150px;
+	height: auto;
+	display: none;
+}
+
+.map-footer {
+	padding-top: 10px;
+}
+
+.map-search div li {
+	color: #fff;
+}
+
+.layui-form .layui-form-mid {
+	margin-left: 10px;
+}

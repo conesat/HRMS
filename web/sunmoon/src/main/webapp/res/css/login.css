@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.layui-layout .layui-body {
+	left: 0px;
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	align-items: center;
+}
+
+.layui-form-item>.layui-form-label {
+	width: 60px;
+}
+
+.layui-body>.layui-card {
+	margin: 0 auto;
+	margin-top: -10%;
+	min-width: 280px;
+}
+
+.layui-card>.layui-card-header {
+	text-align: center;
+	background-color: #0078d7;
+	color: #fff;
+}
+
+.layui-form-item>.layui-input-inline {
+	margin-right: 0px;
+	margin-left: 0px;
+	flex: 1;
+}
+
+.layui-form-item>.layui-btn {
+	background-color: #45baef;
+}
+
+.layui-form-item {
+	display: flex;
+}
+
+.my-type-button a {
+	height: 60px;
+	line-height: 60px;
+	color: #a9a9a9 !important;
+}
+
+.my-type-button a:hover {
+	color: #848484 !important;
+}
+
+.cmpany-name {
+	color: #676767;
+	background-color: #fff;
+}

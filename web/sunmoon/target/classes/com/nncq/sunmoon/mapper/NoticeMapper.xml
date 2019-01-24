@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.NoticeDao">
+	<insert id="addNotice"
+		parameterType="com.nncq.sunmoon.entity.Notice">
+		INSERT INTO notice
+		(notice_title,notice_msg,notice_time,notice_staff_name,read_staff_id,notice_department_id)VALUES(
+		#{notice_title},#{notice_msg},#{notice_time},#{notice_staff_name},CONCAT(",",#{read_staff_id}),#{notice_department_id});
+	</insert>
+
+	<delete id="delNotice" parameterType="String">
+		delete from notice where
+		notice_id=#{id};
+	</delete>
+
+	<select id="getNoticesById"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Notice">
+		select * from
+		notice WHERE notice_id = #{id}
+	</select>
+
+
+	<select id="getNoticesBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Notice">
+		select * from
+		notice WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field} ${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getNoticesNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from notice
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field} ${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getNoticesByStaffID"
+		parameterType="com.nncq.sunmoon.entity.StaffAndPosition"
+		resultType="com.nncq.sunmoon.entity.Notice">
+		SELECT
+		*
+		FROM
+		(SELECT * FROM notice ORDER BY
+		notice.notice_time DESC LIMIT 1) p
+		WHERE
+		notice_id NOT IN (
+		SELECT
+		notice_id
+		FROM
+		notice
+		WHERE
+		read_staff_id LIKE concat(
+		concat('%,',
+		#{staff_id}),
+		'%'
+		)
+		)
+		AND notice_department_id LIKE concat(concat('%',
+		#{department_id}), '%')
+
+	</select>
+
+	<update id="readNotice"
+		parameterType="com.nncq.sunmoon.entity.StaffIdAndNoticeId">
+		UPDATE notice SET
+		notice.read_staff_id=CONCAT(IFNULL(notice.read_staff_id,''),",",#{staff_id})
+		where notice.notice_id=#{notice_id}
+	</update>
+
+	<select id="getNoticesAll"
+		resultType="com.nncq.sunmoon.entity.Notice" parameterType="String">
+		select *
+		from notice
+		WHERE
+		notice_department_id
+		LIKE
+		concat(concat('%',#{notice_department_id}),'%')
+		ORDER BY notice_time
+		DESC
+		limit 20
+	</select>
+
+
+</mapper>

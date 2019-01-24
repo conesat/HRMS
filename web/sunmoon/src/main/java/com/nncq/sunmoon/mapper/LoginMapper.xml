@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.LoginDao">
+	<select id="existenceStaffID" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM login WHERE staff_id=#{id};
+	</select>
+
+	<select id="verification" resultType="int"
+		parameterType="com.nncq.sunmoon.entity.Login">
+
+		SELECT COUNT(*) FROM login WHERE staff_id=#{staff_id}
+		and
+		staff_password=#{staff_password};
+	</select>
+
+	<select id="selectStaffData"
+		resultType="com.nncq.sunmoon.entity.StaffAndPosition"
+		parameterType="String">
+		SELECT * FROM
+		staff_position WHERE staff_id=#{id} and staff_state="在职";
+
+	</select>
+
+	<select id="selectIDByIDCard" resultType="String"
+		parameterType="String">
+		SELECT staff_id FROM login WHERE staff_idcard=#{idCard};
+	</select>
+
+	<select id="getStaffNumber" resultType="Integer">
+		SELECT count(*) FROM
+		staff WHERE staff_state="在职";
+	</select>
+</mapper>

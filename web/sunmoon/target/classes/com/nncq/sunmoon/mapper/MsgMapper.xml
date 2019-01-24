@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.MsgDao">
+	<insert id="addMsg" parameterType="com.nncq.sunmoon.entity.Msg">
+		INSERT INTO msg
+		(type,object_id,msg_type,msg_title,msg_body,read_staff_id,send_id,send_name,send_time)VALUES(
+		#{type},#{object_id},#{msg_type},#{msg_title},#{msg_body},CONCAT(",",#{send_id}),#{send_id},#{send_name},#{send_time});
+	</insert>
+
+	<delete id="delNotice" parameterType="String">
+		delete from msg where
+		msg_id=#{id};
+	</delete>
+
+	<select id="getNoReadMsg"
+		parameterType="com.nncq.sunmoon.entity.Msg"
+		resultType="com.nncq.sunmoon.entity.Msg">
+		SELECT * FROM msg WHERE
+		msg_id not in (SELECT
+		msg_id FROM msg WHERE read_staff_id
+		LIKE
+		concat(concat('%,',#{staff_id}),'%')
+		) and
+		type =#{type} and object_id=#{object_id}
+		GROUP BY msg_id DESC LIMIT 1
+	</select>
+
+	<update id="readMsg" parameterType="com.nncq.sunmoon.entity.Msg">
+		UPDATE msg SET
+		read_staff_id=CONCAT(IFNULL(read_staff_id,''),",",#{staff_id})
+		where
+		msg_id=#{msg_id}
+	</update>
+
+	<select id="getMsgList"
+		parameterType="com.nncq.sunmoon.entity.GetMsgList"
+		resultType="com.nncq.sunmoon.entity.Msg">
+		SELECT * FROM msg WHERE
+		type ='staff_id' and object_id=#{staff_id}
+		UNION
+		SELECT * FROM msg WHERE
+		type ='department_id' and object_id=#{department_id}
+		UNION
+		SELECT * FROM msg WHERE
+		type ='position_id' and object_id=#{position_id}
+
+		GROUP BY msg_id DESC
+		ORDER BY send_time desc
+
+		LIMIT 20
+
+	</select>
+
+
+</mapper>

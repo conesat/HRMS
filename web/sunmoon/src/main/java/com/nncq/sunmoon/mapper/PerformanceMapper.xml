@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.PerformanceDao">
+	<insert id="addPerformance"
+		parameterType="com.nncq.sunmoon.entity.Performance">
+		INSERT INTO
+		performance(staff_id,month,performance)VALUES(#{staff_id},#{month},#{performance})
+	</insert>
+
+	<update id="updateStaffPerformance"
+		parameterType="com.nncq.sunmoon.entity.Performance">
+		UPDATE performance SET performance =#{performance} WHERE
+		staff_id= #{staff_id} and month=#{month}
+	</update>
+
+	<select id="getStaffPerformanceByPerformance"
+		resultType="com.nncq.sunmoon.entity.Performance"
+		parameterType="String">
+		SELECT * FROM staff_performance_view WHERE
+		`month`=#{month}and staff_id=#{staff_id}
+	</select>
+
+	<select id="getPerformanceBySe"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Performance">
+		select * from
+		performance_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER
+		BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getPerformanceNumberBySe" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from performance_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getStaffPerformanceBySe"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Performance">
+		select * from
+		(
+		SELECT
+		staff_id,
+		staff_name,
+		staff_sex,
+		staff_phone,
+		department_name,
+		department_id,
+		position_name,
+		work_address_name,
+		CASE
+		`month`
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH
+		(CURRENT_DATE)
+		) THEN
+		`month`
+		ELSE
+		''
+		END AS `month`,
+		CASE `month`
+		WHEN
+		CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (CURRENT_DATE)
+		) THEN
+		performance
+		ELSE
+		''
+		END AS `performance`
+		FROM
+		staff_performance_view
+
+		) p
+		WHERE
+		${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getStaffPerformanceNumberBySe" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from
+		(
+
+		SELECT
+		staff_id,
+		staff_name,
+		staff_sex,
+		staff_phone,
+		department_name,
+		position_name,
+		work_address_name,
+		CASE `month`
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (CURRENT_DATE)
+		) THEN
+		`month`
+		ELSE
+		''
+		END AS `month`,
+		CASE `month`
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (CURRENT_DATE)
+		) THEN
+		performance
+		ELSE
+		''
+		END AS `performance`
+		FROM
+		staff_performance_view
+
+		) p WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+</mapper>

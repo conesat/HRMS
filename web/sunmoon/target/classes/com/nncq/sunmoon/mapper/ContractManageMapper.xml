@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.ContractManageDao">
+
+	<insert id="addContract"
+		parameterType="com.nncq.sunmoon.entity.Contract">
+		INSERT INTO
+		contract(contract_id,contract_long,contract_msg,contract_name,contract_use_state)
+		VALUES(#{contract_id},#{contract_long},#{contract_msg},#{contract_name},0);
+	</insert>
+
+	<select id="getContractsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Contract">
+		select * from
+		contract WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%') and contract_use_state=0
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getStaffContractsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.StaffContractDTO">
+		select * from
+
+		(
+		SELECT
+		s.*,p.contract_name,p.state,p.end_time
+
+		FROM
+		( SELECT * FROM staff_position WHERE staff_state='在职') s
+
+		LEFT JOIN
+		(
+		SELECT
+		id,
+		staff_id,
+		contract_name,
+		SUBSTRING_INDEX(
+		group_concat(state
+		ORDER BY end_time DESC),
+		',',
+		1
+		) AS state,
+		SUBSTRING_INDEX(
+		group_concat(
+		end_time
+		ORDER BY
+		end_time DESC
+		),
+		',',
+		1
+		) AS end_time
+		FROM
+		staff_contract
+		GROUP BY
+		staff_id
+		) p ON s.staff_id = p.staff_id
+		GROUP BY
+		s.staff_id
+		) my
+
+		WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getStaffContractsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from
+		(
+		SELECT
+		s.*,p.contract_name,p.state,p.end_time
+
+		FROM
+		( SELECT * FROM
+		staff_position WHERE staff_state='在职') s
+
+		LEFT JOIN (
+		SELECT
+		id,
+		staff_id,
+		contract_name,
+		SUBSTRING_INDEX(
+		group_concat(state ORDER BY end_time
+		DESC),
+		',',
+		1
+		) AS state,
+		SUBSTRING_INDEX(
+		group_concat(
+		end_time
+		ORDER BY
+		end_time DESC
+		),
+		',',
+		1
+		) AS end_time
+		FROM
+		staff_contract
+		GROUP BY
+		staff_id
+		) p
+		ON s.staff_id = p.staff_id
+		GROUP BY
+		s.staff_id
+		) my
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getContractById"
+		resultType="com.nncq.sunmoon.entity.Contract" parameterType="String">
+		select *
+		from
+		contract
+		where contract_id=#{id};
+	</select>
+
+	<update id="updateContract"
+		parameterType="com.nncq.sunmoon.entity.Contract">
+		UPDATE contract
+		SET
+		contract_name=#{contract_name},contract_long=#{contract_long},contract_msg=#{contract_msg}
+		WHERE
+		contract_id=#{contract_id};
+	</update>
+
+	<update id="delContract" parameterType="String">
+		update contract set
+		contract_use_state=-1
+		WHERE contract_id=#{id};
+	</update>
+
+	<select id="getLastId" resultType="String">
+		select contract_id from
+		contract
+		order by
+		contract_id DESC limit 1;
+	</select>
+
+	<select id="getContractsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from contract
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%') and contract_use_state=0
+	</select>
+
+	<select id="getAllContractIdName"
+		resultType="com.nncq.sunmoon.entity.Contract">
+		select
+		contract_id,contract_name from contract where
+		contract_use_state=0;
+	</select>
+
+
+	<update id="uploadContract"
+		parameterType="com.nncq.sunmoon.entity.Contract">
+		UPDATE contract
+		SET
+		contract_url=#{contract_url}
+		WHERE
+		contract_id=#{contract_id};
+	</update>
+	<update id="updateStaffOldContract">
+		UPDATE staff_contract SET state='已过期'  WHERE curdate() > end_time AND state='使用中'
+	</update>
+</mapper>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.StaffManageDao">
+
+	<insert id="addStaff"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		INSERT INTO
+		staff(staff_id,staff_name,staff_birthday,staff_certificates_type,
+		staff_certificates_number,staff_sex,staff_address,staff_phone,
+		staff_email,staff_in_date,staff_education,staff_state,position_id,
+		department_id,work_address_id,staff_msg,staff_type,staff_marriage)
+		VALUES(#{staff_id},#{staff_name},#{staff_birthday},#{staff_certificates_type},
+		#{staff_certificates_number},#{staff_sex},#{staff_address},#{staff_phone},
+		#{staff_email},#{staff_in_date},#{staff_education},#{staff_state},#{position_id},
+		#{department_id},#{work_address_id},#{staff_msg},#{staff_type},#{staff_marriage});
+	</insert>
+
+	<insert id="addLogin"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		INSERT INTO
+		login(staff_id,staff_password,staff_idcard)
+		VALUES(#{staff_id},#{staff_password},#{staff_certificates_number});
+	</insert>
+
+	<insert id="transferAdminStaff"
+		parameterType="com.nncq.sunmoon.entity.AdminTransferStaff">
+		INSERT INTO
+		admin_transfer_staff(id,department_id,object_department_id,staff_id,apply_staff_id,object_staff_id,transfer_type,msg,state)
+		VALUES(#{id},#{department_id},#{object_department_id},#{staff_id},#{apply_staff_id},#{object_staff_id},#{transfer_type},#{msg},#{state});
+	</insert>
+
+	<select id="getTransferAdminStaff" parameterType="String"
+		resultType="com.nncq.sunmoon.entity.AdminTransferStaff">
+		select * from transfer_staff_view where id=#{id}
+	</select>
+	
+	<update id="transferStaffRes">
+		update admin_transfer_staff set state=#{state} where id=#{id}
+	</update>
+
+	<select id="getDepartmentStaff"
+		parameterType="com.nncq.sunmoon.entity.StaffAndPosition"
+		resultType="com.nncq.sunmoon.entity.StaffIdName">
+		SELECT staff_id,staff_name FROM staff_position WHERE
+		staff_state='在职' AND rank_level&lt;#{rank_level} AND
+		department_id=#{department_id}
+	</select>
+
+
+	<select id="getStaffsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Staff">
+		select * from
+		staff_position_department_work_address WHERE
+		${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order}
+		limit
+		#{start},#{limit};
+	</select>
+	
+	<select id="getStaffByDepId"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.StaffAndPosition">
+		select * from
+		staff_position WHERE
+		${sql} LIKE
+		concat(concat('%',#{key}),'%') and  staff_state='在职'
+		ORDER BY
+		${field}
+		${order}
+		limit
+		#{start},#{limit};
+	</select>
+	
+	<select id="getStaffNumberByDepId" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from
+		staff_position and  staff_state='在职'
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+	
+
+	<select id="getStaffById"
+		resultType="com.nncq.sunmoon.entity.Staff" parameterType="String">
+		select * from
+		staff_position_department_work_address
+		where staff_id=#{id};
+	</select>
+
+	<select id="selectStaffData"
+		resultType="com.nncq.sunmoon.entity.StaffAndPosition"
+		parameterType="String">
+		SELECT * FROM
+		staff_position WHERE staff_id=#{id};
+	</select>
+
+	<update id="updateStaff"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		UPDATE staff
+		SET
+		staff_name=#{staff_name},staff_birthday=#{staff_birthday},staff_certificates_type=#{staff_certificates_type}
+		,staff_certificates_number=#{staff_certificates_number},staff_sex=#{staff_sex},staff_address=#{staff_address}
+		,staff_phone=#{staff_phone}
+		,staff_email=#{staff_email}
+		,staff_education=#{staff_education}
+		,work_address_id=#{work_address_id}
+		,staff_msg=#{staff_msg}
+		,staff_marriage=#{staff_marriage}
+		,staff_in_date=#{staff_in_date}
+		,staff_state=#{staff_state}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<update id="delStaff" parameterType="String">
+		<!-- update staff set staff_use_state=-1 WHERE staff_id=#{id}; -->
+	</update>
+
+	<select id="getLastId" resultType="String">
+		select staff_id from
+		staff
+		order by
+		staff_id DESC limit 1;
+	</select>
+
+	<select id="getStaffsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from
+		staff_position_department_work_address
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getAllStaffIdName"
+		resultType="com.nncq.sunmoon.entity.StaffIdName">
+		select
+		staff_id,staff_name,staff_in_date from staff where
+		staff_state='在职';
+	</select>
+
+
+	<update id="updateStaffIdSetting"
+		parameterType="com.nncq.sunmoon.entity.StaffIdSetting">
+		UPDATE staff_id
+		SET
+		prefix=#{prefix},middle=#{middle},suffix=#{suffix},separate=#{separate},auto=#{auto},password=#{password}
+		WHERE
+		id=0;
+	</update>
+
+	<select id="getStaffIdSetting"
+		resultType="com.nncq.sunmoon.entity.StaffIdSetting">
+		select
+		* from staff_id where
+		id=0;
+	</select>
+
+	<select id="getStaffNumber" resultType="int">
+		select
+		count(*) from
+		staff;
+	</select>
+
+
+	<update id="updateImagOne"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		update staff set
+		staff_idcard_picture_one=#{staff_idcard_picture_one}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<update id="updateImagTow"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		update staff set
+		staff_idcard_picture_tow=#{staff_idcard_picture_tow}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<update id="updateImagThree"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		update staff set
+		staff_person_picture=#{staff_person_picture}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<insert id="addStaffContract"
+		parameterType="com.nncq.sunmoon.entity.StaffContract">
+		INSERT INTO
+		staff_contract(staff_id,contract_name,start_time,end_time,contract_url,state)
+		VALUES(#{staff_id},#{contract_name},#{start_time},#{end_time},#{contract_url},#{state});
+	</insert>
+
+	<update id="updateStaffContract"
+		parameterType="com.nncq.sunmoon.entity.StaffContract">
+		update staff_contract set
+		state="已过期",change_msg=#{change_msg}
+		WHERE
+		state='使用中' and
+		staff_id=#{staff_id};
+	</update>
+
+	<select id="getStaffContractByStaffId"
+		resultType="com.nncq.sunmoon.entity.StaffContract"
+		parameterType="String">
+		select
+		* from
+		staff_contract where staff_id=#{id}
+	</select>
+
+
+	<update id="regularStaff" parameterType="String">
+		update staff set
+		staff_type="正式员工",staff_state="在职"
+		WHERE
+		staff_id=#{id};
+	</update>
+
+	<update id="quitStaff" parameterType="String">
+		update staff set
+		staff_state="已离职"
+		WHERE
+		staff_id=#{id};
+	</update>
+
+	<update id="transferStaff"
+		parameterType="com.nncq.sunmoon.entity.Staff">
+		update staff set
+		position_id=#{position_id},department_id=#{department_id},work_address_id=#{work_address_id}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<update id="resetPassword"
+		parameterType="com.nncq.sunmoon.entity.Login">
+		update login set
+		staff_password=#{staff_password}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<update id="setPassword"
+		parameterType="com.nncq.sunmoon.entity.Login">
+		update login set
+		staff_password=#{staff_password}
+		WHERE
+		staff_id=#{staff_id};
+	</update>
+
+	<select id="getStaffSex"
+		resultType="com.nncq.sunmoon.entity.ChartsKeyValue">
+		SELECT
+		staff_sex AS `name`,
+		COUNT(staff_sex) AS
+		value
+		FROM
+		staff
+		WHERE staff_state="在职"
+		GROUP BY
+		staff.staff_sex;
+	</select>
+	<select id="getAgeProp"
+		resultType="com.nncq.sunmoon.entity.ChartsKeyValue">
+		SELECT * from age_prop;
+	</select>
+	<select id="getWorkAddProp"
+		resultType="com.nncq.sunmoon.entity.ChartsKeyValue">
+		SELECT * from work_add_prop;
+	</select>
+	<select id="getPayProp"
+		resultType="com.nncq.sunmoon.entity.ChartsKeyValue">
+		SELECT * from pay_prop;
+	</select>
+</mapper>

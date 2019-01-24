@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.RecruitManageDao">
+
+	<insert id="addRecruit"
+		parameterType="com.nncq.sunmoon.entity.Recruit">
+		INSERT INTO
+		recruit(rel_rec_id,position_id,rel_rec_title,rel_rec_desc,rel_rec_number,rel_rec_money,rel_rec_use_state)
+		VALUES(#{rel_rec_id},#{position_id},#{rel_rec_title},#{rel_rec_desc},#{rel_rec_number},#{rel_rec_money},0);
+	</insert>
+
+	<select id="getRecruitsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Recruit">
+		select * from
+		apply_staff_recruit_position WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%') and rel_rec_use_state=0
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getRecruitById"
+		resultType="com.nncq.sunmoon.entity.Recruit" parameterType="String">
+		select *
+		from apply_staff_recruit_position
+		where rel_rec_id=#{id};
+	</select>
+
+	<update id="updateRecruit"
+		parameterType="com.nncq.sunmoon.entity.Recruit">
+		UPDATE recruit
+		SET
+		rel_rec_title=#{rel_rec_title},rel_rec_desc=#{rel_rec_desc},rel_rec_number=#{rel_rec_number},rel_rec_money=#{rel_rec_money},rel_rec_money=#{position_id}
+		WHERE
+		rel_rec_id=#{rel_rec_id};
+	</update>
+
+	<update id="delRecruit" parameterType="String">
+		update recruit set
+		rel_rec_use_state=-1
+		WHERE rel_rec_id=#{id};
+	</update>
+
+	<select id="getLastId" resultType="String">
+		select rel_rec_id from
+		recruit
+		order by
+		rel_rec_id DESC limit 1;
+	</select>
+	
+	<select id="getApplyId" resultType="String">
+		select rel_rec_id from
+		recruit
+		order by
+		rel_rec_id DESC limit 1;
+	</select>
+
+	<select id="getRecruitsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_staff_recruit_position
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%') and rel_rec_use_state=0
+	</select>
+
+
+</mapper>
+
+

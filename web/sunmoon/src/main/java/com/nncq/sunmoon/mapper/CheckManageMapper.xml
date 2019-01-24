@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.CheckManageDao">
+
+	<insert id="addCheckDetailed"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		INSERT INTO
+		check_detailed(check_detailed_day,staff_id,check_detailed__time1)
+		VALUES(#{check_day},#{staff_id},#{check_time})
+	</insert>
+
+
+	<update id="check1"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		update check_detailed set
+		check_detailed__time1=#{check_time}
+		where
+		check_detailed_day=
+		#{check_day} and staff_id=#{staff_id};
+	</update>
+
+	<update id="check2"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		update check_detailed set
+		check_detailed__time2=#{check_time}
+		where
+		check_detailed_day=
+		#{check_day} and staff_id=#{staff_id};
+	</update>
+
+	<update id="check3"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		update check_detailed set
+		check_detailed__time3=#{check_time}
+		where
+		check_detailed_day=
+		#{check_day} and staff_id=#{staff_id};
+	</update>
+
+	<update id="check4"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		update check_detailed set
+		check_detailed__time4=#{check_time}
+		where
+		check_detailed_day=
+		#{check_day} and staff_id=#{staff_id};
+	</update>
+
+	<update id="check5"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		update check_detailed set
+		check_detailed__time5=#{check_time}
+		where
+		check_detailed_day=
+		#{check_day} and staff_id=#{staff_id};
+	</update>
+
+	<update id="check6"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		update check_detailed set
+		check_detailed__time6=#{check_time}
+		where
+		check_detailed_day=
+		#{check_day} and staff_id=#{staff_id};
+	</update>
+	
+	<update id="updateState"
+		parameterType="com.nncq.sunmoon.entity.CheckDetailed">
+		update check_detailed set
+		check_detailed_state=#{check_detailed_state}
+		where
+		check_detailed_day=
+		#{check_detailed_day} and staff_id=#{staff_id};
+	</update>
+
+
+	<select id="getCheckDetailedByDay"
+		resultType="com.nncq.sunmoon.entity.CheckDetailed"
+		parameterType="String">
+		select * from
+		check_detailed where check_detailed_day =
+		#{day};
+	</select>
+
+	<select id="getCheckDetailedByDayMoth"
+		resultType="com.nncq.sunmoon.entity.CheckDetailed"
+		parameterType="String">
+		select * from
+		check_detailed where check_detailed_day
+		like concat(#{moth},'%');
+	</select>
+
+	<select id="getCheckDetailedByStaffCheck"
+		resultType="com.nncq.sunmoon.entity.CheckDetailed"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck">
+		select * from
+		check_detailed_staff_work_address where check_detailed_day =
+		#{check_day} and staff_id=#{staff_id};
+	</select>
+
+	<!-- scheduling -->
+
+	<insert id="addScheduling"
+		parameterType="com.nncq.sunmoon.entity.Scheduling">
+		INSERT INTO
+		scheduling(month,dates)
+		VALUES(#{month},#{dates})
+	</insert>
+
+	<select id="getSchedulingByMonth"
+		resultType="com.nncq.sunmoon.entity.Scheduling" parameterType="String">
+		select *
+		from
+		scheduling where month = #{month};
+	</select>
+
+	<delete id="delScheduling" parameterType="String">
+		DELETE FROM scheduling
+		WHERE month=#{month}
+	</delete>
+
+	<select id="getSchedulingBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Scheduling">
+		select * from
+		scheduling WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getSchedulingNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from scheduling
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<update id="updateScheduling"
+		parameterType="com.nncq.sunmoon.entity.Scheduling">
+		UPDATE scheduling SET dates=#{dates} WHERE
+		month=#{month};
+	</update>
+
+	<!-- scheduling end -->
+
+
+	<select id="getChecksBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Check">
+		select * from
+		check_main WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getChecksNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from check_main
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+
+	<select id="getCheckDetailedsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.CheckDetailed">
+		select * from
+		check_detailed_staff_work_address WHERE ${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getCheckDetailedsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from check_detailed_staff_work_address
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+	
+	<select id="getCheckMothDetailedsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.StaffCheckMonth">
+		select * from
+		staff_month_check_staff WHERE ${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getCheckMonthDetailedsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from staff_month_check_staff
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getCheckDetailedsByMoth" parameterType="String"
+		resultType="com.nncq.sunmoon.entity.CheckDetailed">
+		select * from
+		check_detailed WHERE check_detailed_day LIKE
+		concat(concat('%',#{month}),'%') ORDER BY check_detailed_day asc;
+	</select>
+
+
+	<select id="getCheckDetailedsByStaffCheck"
+		parameterType="com.nncq.sunmoon.entity.StaffCheck"
+		resultType="com.nncq.sunmoon.entity.CheckDetailed">
+		select * from
+		check_detailed_staff_work_address WHERE
+		check_detailed_day = #{check_day} and staff_id=#{staff_id};
+	</select>
+
+	<!-- 更新考勤统计 -->
+	<insert id="addCheck"
+		parameterType="com.nncq.sunmoon.entity.Check">
+		INSERT INTO
+		check_main(check_month,check_attendance,check_absence,check_late,check_early_retreat,check_leave)
+		VALUES(#{check_month},#{check_attendance},#{check_absence},#{check_late},#{check_early_retreat},#{check_leave})
+	</insert>
+
+	<update id="updateCheck"
+		parameterType="com.nncq.sunmoon.entity.Check">
+		UPDATE
+		check_main set
+		check_attendance=#{check_attendance},check_absence=#{check_absence},check_late=#{check_late},check_early_retreat=#{check_early_retreat},check_leave=#{check_leave}
+		where check_month=#{check_month}
+	</update>
+
+	<select id="getCheckByMonth" parameterType="String"
+		resultType="com.nncq.sunmoon.entity.Check">
+		SELECT * FROM check_main WHERE check_month=#{month}
+	</select>
+	<!-- 更新考勤统计 end -->
+
+	<!-- 更新个人考勤统计 -->
+	<insert id="addStaffCheckMonth"
+		parameterType="com.nncq.sunmoon.entity.StaffCheckMonth">
+		INSERT INTO
+		staff_month_check(month,staff_id,absence,late,early,attendance,attendance_need,staff_leave)
+		VALUES(#{month},#{staff_id},#{absence},#{late},#{early},#{attendance},#{attendance_need},#{staff_leave})
+	</insert>
+
+	<update id="updateStaffCheckMonth"
+		parameterType="com.nncq.sunmoon.entity.StaffCheckMonth">
+		UPDATE
+		staff_month_check set
+		absence=#{absence},late=#{late},early=#{early},attendance=#{attendance},attendance_need=#{attendance_need},staff_leave=#{staff_leave}
+		where month=#{month} and staff_id=#{staff_id}
+	</update>
+
+	<select id="getStaffCheckMonthByMonth"
+		parameterType="com.nncq.sunmoon.entity.StaffCheckMonth"
+		resultType="com.nncq.sunmoon.entity.StaffCheckMonth">
+		SELECT * FROM staff_month_check WHERE month=#{month} and
+		staff_id=#{staff_id}
+	</select>
+
+	<select id="getStaffCheckMonthsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.StaffCheckMonth">
+		select * from
+		staff_month_check WHERE ${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getStaffCheckMonthsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from staff_month_check
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+	<!-- 更新个人考勤统计 end -->
+</mapper>

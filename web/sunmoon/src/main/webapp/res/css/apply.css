@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.layui-row {
+	flex-wrap: wrap;
+	padding-top: 20px;
+	width: 100%;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	display: flex;
+}
+
+.apply{
+	padding:10px;
+	margin: 0 auto;
+	background-color: #fff;
+	
+}
+
+.apply-fun div{
+	height: 100px;
+	background-color: #000;
+	margin: 10px;
+	color:#fff;
+}

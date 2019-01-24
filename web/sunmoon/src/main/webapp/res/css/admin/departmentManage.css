@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+.layui-layout-admin .layui-body {
+	display: flex;
+	bottom: 0px;
+}
+
+.content {
+	margin: 0 auto;
+}
+
+.div-title {
+	margin-bottom: 10px;
+}
+
+.my-form-item {
+	text-align: center;
+}
+
+.my-button {
+	/* background-color: #0078d7 !important; */
+}
+
+.layui-form-item {
+	display: flex;
+}
+
+.layui-form-item .layui-btn-group {
+	margin: 0 auto;
+}
+
+.layui-form-label {
+	padding-left: 0px;
+	padding-right: 0px;
+	width: auto;
+	color: #525252;
+}
+
+.layui-input-block {
+	margin-left: 10px;
+	flex: 1;
+}
+
+.layui-form-label-inner {
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 30px;
+}
+
+.layui-card-header {
+	padding-top: 10px;
+}
+
+.adddepartment-content {
+	margin-top: 10px;
+	max-width: 800px;
+}
+
+#add-department-content {
+	display: none;
+}
+
+.content-form {
+	padding-top: 10px;
+}
+

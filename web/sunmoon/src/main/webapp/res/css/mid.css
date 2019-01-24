@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.nav-max {
+	display: none;
+}
+
+.nav-mid {
+	display: block;
+}
+
+.nav-min {
+	display: none;
+}
+/* 
+组织结构 */
+.org-wrap {
+	width: 100%;
+	overflow: hidden;
+	background-color: #f7f7f7;
+	border-radius: 5px;
+}
+.org-wrap h3{
+    background-color: #0078d7;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}

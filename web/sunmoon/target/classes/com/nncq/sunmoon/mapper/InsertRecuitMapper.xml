@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.RecruitDao">
+	<insert id="insertIntoRecruit" parameterType="com.nncq.sunmoon.entity.Recruit">
+		INSERT INTO recruit
+		(recruit_name,recruit_images,recruit_msg,recruit_state,position_id)VALUES(
+		#{recruit_name},#{recruit_images},#{recruit_msg},#{recruit_state},#{position_id});
+	</insert>
+	
+   <select id="selectRecruitName" resultType="int" parameterType="com.nncq.sunmoon.entity.Recruit" >
+     SELECT COUNT(*) from recruit WHERE recruit_name=#{recruit_name}
+   </select>
+   
+    <select id="selectRecruitAll" resultType="com.nncq.sunmoon.entity.Recruit"  >
+     SELECT recruit_id,recruit_name from recruit 
+   </select>
+   
+</mapper>

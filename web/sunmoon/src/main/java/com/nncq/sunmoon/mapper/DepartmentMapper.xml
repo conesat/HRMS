@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.DepartmentDao">
+
+	<resultMap id="departmentResultMap"
+		type="com.nncq.sunmoon.entity.DepartmentStaff">
+		<id column="department_id" property="department_id"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="department_name" property="department_name"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="department_describe"
+			property="department_describe" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+
+		<collection property="children"
+			ofType="com.nncq.sunmoon.entity.DepartmentStaff"
+			column="department_id" select="getChildren" />
+	</resultMap>
+
+
+	<insert id="addDepartment"
+		parameterType="com.nncq.sunmoon.entity.Department">
+		INSERT INTO
+		department
+		VALUES(#{department_id},#{department_name},#{department_describe},0,#{parent_id},#{staff_id});
+	</insert>
+	<select id="getOrgChart"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.DepartmentStaff"
+		resultMap="departmentResultMap">
+		select
+		* from department where parent_id='';
+	</select>
+
+	<select id="getChildren" parameterType="String"
+		resultType="com.nncq.sunmoon.entity.DepartmentStaff"
+		resultMap="departmentResultMap">
+		select
+		* from department where parent_id=#{department_id} and
+		department_use_state=0;
+	</select>
+
+	<select id="getDepsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.DepartmentStaff">
+		select * from
+		department_staff WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%') and
+		department_use_state=0
+		ORDER BY
+		${field} ${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getDepById"
+		resultType="com.nncq.sunmoon.entity.DepartmentStaff" parameterType="String">
+		select *
+		from department_staff
+		where department_id=#{id};
+	</select>
+
+	<update id="updateDepartment"
+		parameterType="com.nncq.sunmoon.entity.Department">
+		UPDATE department
+		SET
+		department_name=#{department_name},department_describe=#{department_describe},parent_id=#{parent_id},staff_id=#{staff_id}
+		WHERE
+		department_id=#{department_id};
+	</update>
+
+	<update id="delDepartment" parameterType="String">
+		update department set
+		department_use_state=-1
+		WHERE department_id=#{id};
+	</update>
+
+	<select id="getLastId" resultType="String">
+		select department_id from
+		department order by
+		department_id DESC limit 1;
+	</select>
+
+	<select id="getDepsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from department_staff
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%') and department_use_state=0
+	</select>
+
+	<select id="getAllOrgs"
+		resultType="com.nncq.sunmoon.entity.Department">
+		select * from department where department_use_state
+		&lt;&gt; -1;
+	</select>
+	
+	<select id="getAllOrgsHadAdmin"
+		resultType="com.nncq.sunmoon.entity.Department">
+		select * from department where department_use_state
+		&lt;&gt; -1 AND staff_id&lt;&gt;'' AND staff_id is not null;
+	</select>
+	
+	<select id="getAllMyOrgs" parameterType="String"
+		resultType="com.nncq.sunmoon.entity.Department">
+		select * from department where department_id in( select department_id from department where FIND_IN_SET(department_id,getChildList(#{dep_id})) ) and department_use_state
+		&lt;&gt; -1;
+	</select>
+</mapper>

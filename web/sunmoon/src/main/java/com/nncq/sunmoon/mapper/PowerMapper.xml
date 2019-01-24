@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.PowerDao">
+
+	<resultMap id="departmentResultMap" type="com.nncq.sunmoon.entity.Power">
+		<id column="power_id" property="power_id" />
+		<collection property="children" ofType="com.nncq.sunmoon.entity.Power"
+			column="power_id" select="getChildren" />
+	</resultMap>
+
+
+	<select id="getChildren" parameterType="String"
+		resultType="com.nncq.sunmoon.entity.Power" resultMap="departmentResultMap">
+		select
+		* from
+		power where parent_id=#{power_id};
+	</select>
+
+
+	<select id="getAllPower" resultType="com.nncq.sunmoon.entity.Power"
+		resultMap="departmentResultMap">
+		select * from power where
+		parent_id=-1;
+	</select>
+
+	<!-- getPostPowers start -->
+
+	<resultMap id="departmentResultMap2" type="com.nncq.sunmoon.entity.Power">
+		<id column="power_id" property="power_id" />
+		<collection property="children" ofType="com.nncq.sunmoon.entity.Power"
+			column="{sql=mysql,power_id=power_id}" select="getChildren2" />
+	</resultMap>
+
+
+	<select id="getChildren2" parameterType="java.util.Map"
+		resultType="com.nncq.sunmoon.entity.Power" resultMap="departmentResultMap2">
+		select
+		*, CASE
+		WHEN
+		${sql}
+		THEN 'true'
+		END
+		AS checked,'${sql}' AS mysql from
+		power where
+		parent_id=#{power_id};
+	</select>
+
+
+	<select id="getPostPowers" resultType="com.nncq.sunmoon.entity.Power"
+		resultMap="departmentResultMap2" parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		SELECT
+		*, CASE
+		WHEN
+		${sql}
+		THEN 'true'
+		END
+		AS checked,'${sql}' AS mysql
+		FROM
+		power where
+		parent_id=-1
+	</select>
+
+	<!-- getPostPowers end -->
+	
+	<select id="getAllPowerList" resultType="com.nncq.sunmoon.entity.Power">
+		select * from power
+	</select>
+
+</mapper>

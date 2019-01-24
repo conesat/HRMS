@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.StaffApplyDao">
+	<insert id="staffLeave"
+		parameterType="com.nncq.sunmoon.entity.Leave">
+		INSERT INTO staff_leave_apply
+		(leave_id,leave_staff_id,leave_type,leave_start_time,leave_end_time,leave_msg)
+		VALUES
+		(#{leave_id},#{leave_staff_id},#{leave_type},#{leave_start_time},#{leave_end_time},#{leave_msg})
+	</insert>
+	<select id="getLeaveID" resultType="String">
+		select leave_id from
+		staff_leave_apply
+		order by
+		leave_id DESC limit 1;
+	</select>
+	<insert id="staffEvection"
+		parameterType="com.nncq.sunmoon.entity.Evection">
+		INSERT INTO staff_evection_apply
+		(evection_id,evection_staff_id,evection_start_time,evection_end_time,evection_msg,evection_acc,
+		evection_acc_position,evection_vehicle,evection_path)
+		VALUES
+		(#{evection_id},#{evection_staff_id},#{evection_start_time},#{evection_end_time},#{evection_msg}
+		,#{evection_acc},#{evection_acc_position},#{evection_vehicle},#{evection_path})
+	</insert>
+	<select id="getEvectionID" resultType="String">
+		select evection_id from
+		staff_evection_apply
+		order by
+		evection_id DESC limit 1;
+	</select>
+	<insert id="staffTransfer"
+		parameterType="com.nncq.sunmoon.entity.Transfer">
+		INSERT INTO staff_transfer_apply
+		(transfer_id,transfer_staff_id,transfer_position_name_old,transfer_department_name_old,transfer_position_name_new,transfer_department_name_new,
+		transfer_msg)
+		VALUES
+		(#{transfer_id},#{transfer_staff_id},#{transfer_position_name_old},#{transfer_department_name_old},#{transfer_position_name_new}
+		,#{transfer_department_name_new},#{transfer_msg})
+	</insert>
+	<select id="getTransferID" resultType="String">
+		select transfer_id from
+		staff_transfer_apply
+		order by
+		transfer_id DESC limit 1;
+	</select>
+	<insert id="staffOverTime"
+		parameterType="com.nncq.sunmoon.entity.OverTime">
+		INSERT INTO staff_overtime_apply
+		(overtime_id,overtime_staff_id,overtime_department,overtime_post,overtime_start_time,overtime_duration,
+		overtime_end_time,overtime_msg)
+		VALUES
+		(#{overtime_id},#{overtime_staff_id},#{overtime_department},#{overtime_post},#{overtime_start_time}
+		,#{overtime_duration},#{overtime_end_time},#{overtime_msg})
+	</insert>
+	<select id="getoverTimeID" resultType="String">
+		select overtime_id from
+		staff_overtime_apply
+		order by
+		overtime_id DESC limit 1;
+	</select>
+	<insert id="staffExpense"
+		parameterType="com.nncq.sunmoon.entity.Expense">
+		INSERT INTO staff_expense_apply
+		(expense_id,expense_staff_id,expense_post,expense_department,expense_type,expense_total_price,
+		expense_actual_price,expense_msg,expense_file)
+		VALUES
+		(#{expense_id},#{expense_staff_id},#{expense_post},#{expense_department},#{expense_type}
+		,#{expense_total_price},#{expense_actual_price},#{expense_msg},#{expense_file})
+	</insert>
+	<select id="getExpenseID" resultType="String">
+		select expense_id from
+		staff_expense_apply
+		order by
+		expense_id DESC limit 1;
+	</select>
+	<insert id="staffQuit"
+		parameterType="com.nncq.sunmoon.entity.StaffQuitApply">
+		INSERT INTO staff_quit_apply
+		(quit_id,quit_staff_id,quit_department,quit_post,quit_time,quit_msg)
+		VALUES
+		(#{quit_id},#{quit_staff_id},#{quit_department},#{quit_post},#{quit_time},#{quit_msg})
+	</insert>
+	<select id="getQuitID" resultType="String">
+		select quit_id from
+		staff_quit_apply
+		order by
+		quit_id DESC limit 1;
+	</select>
+	
+</mapper>

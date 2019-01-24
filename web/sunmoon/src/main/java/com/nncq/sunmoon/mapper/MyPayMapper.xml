@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.MyPayDao">
+	
+	<select id="selectAll"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.MyPay">
+		select * from
+		mypay WHERE
+		${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order}
+		limit
+		#{start},#{limit};
+	</select>
+	<select id="getmyPayNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from
+		mypay
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%');
+	</select>
+</mapper>

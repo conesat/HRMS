@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+.nav-max {
+	display: none;
+}
+
+.nav-mid {
+	display: block;
+	left: 40px;
+}
+
+.nav-min {
+	display: none;
+}
+
+.layui-nav-item>.min-search {
+	display: none;
+}
+
+.layui-header>.layui-logo>.cmpany-name{
+	display: none;
+}
+
+.layui-header>.layui-logo{
+	width:80px;
+}
+
+#body-div {
+	left: 0px;
+}
+
+#menue-span,#menue-div {
+	width: 0px;
+}
+
+#menue-ul {
+	display: none;
+}
+
+/* 组织结构 */
+.org-wrap {
+	width: 100%;
+	overflow: hidden;
+	background-color: #f7f7f7;
+	border-radius: 5px;
+}
+
+.org-wrap .orgWrap{
+	overflow: scroll;
+	margin-left: 0px;
+	left: 0px;
+}
+
+.org-wrap h3{
+    background-color: #0078d7;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}

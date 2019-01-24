@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.PositionManageDao">
+
+	<insert id="addPosition"
+		parameterType="com.nncq.sunmoon.entity.Position">
+		INSERT INTO
+		position_table(position_id,position_name,position_msg,position_use_state,post_id,rank_level)
+		VALUES(#{position_id},#{position_name},#{position_msg},0,#{post_id},#{rank_level});
+	</insert>
+
+	<select id="getPositionsBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Position">
+		select * from
+		position_post WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%') and
+		position_use_state=0
+		ORDER BY
+		${field} ${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getPositionById"
+		resultType="com.nncq.sunmoon.entity.Position" parameterType="String">
+		select * from
+		position_table
+		where position_id=#{id};
+	</select>
+
+	<update id="updatePosition"
+		parameterType="com.nncq.sunmoon.entity.Position">
+		UPDATE position_table
+		SET
+		position_name=#{position_name},position_msg=#{position_msg},position_id=#{position_id},post_id=#{post_id},rank_level=#{rank_level}
+		WHERE
+		position_id=#{position_id};
+	</update>
+	
+	<update id="updateSalary"
+		parameterType="com.nncq.sunmoon.entity.Position">
+		UPDATE position_table
+		SET
+		salaryBase=#{salaryBase}
+		WHERE
+		position_id=#{position_id};
+	</update>
+
+	<update id="delPosition" parameterType="String">
+		update position_table set
+		position_use_state=-1
+		WHERE position_id=#{id};
+	</update>
+
+	<select id="getLastId" resultType="String">
+		select position_id from
+		position_table
+		order by
+		position_id DESC limit 1;
+	</select>
+
+	<select id="getPositionsNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from position_post
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%') and
+		position_use_state=0
+	</select>
+
+	<select id="getAllPositionIdName"
+		resultType="com.nncq.sunmoon.entity.Position">
+		select position_id,position_name from position_table
+	</select>
+
+</mapper>

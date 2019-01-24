@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.MyAttendanceDao">
+<select id="selectAttendance" resultType="com.nncq.sunmoon.entity.StaffCheckMonth" parameterType="com.nncq.sunmoon.entity.StaffCheckMonth">
+SELECT * FROM staff_month_check where staff_id=#{staff_id} and month=#{month}
+</select>
+</mapper>

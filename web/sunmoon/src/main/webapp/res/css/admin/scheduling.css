@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.layui-laydate,.layui-laydate-main,.layui-laydate-content table{
+	width: 100%;
+}
+
+.layui-laydate .layui-this{
+	background-color: #fff!important; 
+    color: #333!important;
+}
+.laydate-day-mark{
+	background: rgba(0,150,136,0.3);
+}
+
+.laydate-day-mark::after{
+ 	background-color:rgba(0,0,0,0);
+}
+
+.layui-table, .layui-table-view{
+	margin: 0;
+}

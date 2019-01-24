@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.SalaryDao">
+	<insert id="addSalary"
+		parameterType="com.nncq.sunmoon.entity.MyPay">
+		INSERT INTO
+		mypay(mypay_staff_id,mypay_time,base_pay,post_pay,bonus,achievements,subsidy,deduction,social_insurance,accumulation_fund,individual_income_tax,actual_pay,mypay_msg,mypay_moth,year_pay)
+		VALUES(#{mypay_staff_id},#{mypay_time},#{base_pay},#{post_pay},#{bonus},#{achievements},#{subsidy},#{deduction},#{social_insurance},#{accumulation_fund},#{individual_income_tax},#{actual_pay},#{mypay_msg},#{mypay_moth},#{year_pay})
+	</insert>
+
+	<update id="updateSalary"
+		parameterType="com.nncq.sunmoon.entity.MyPay">
+		UPDATE mypay SET mypay_time =#{mypay_time},base_pay
+		=#{base_pay},post_pay =#{post_pay},bonus =#{bonus},
+		achievements
+		=#{achievements},subsidy
+		=#{subsidy},deduction
+		=#{deduction},social_insurance
+		=#{social_insurance},accumulation_fund
+		=#{accumulation_fund},
+		individual_income_tax
+		=#{individual_income_tax},actual_pay
+		=#{actual_pay},mypay_msg
+		=#{mypay_msg},year_pay
+		=#{year_pay} WHERE
+		mypay_moth= #{mypay_moth}
+		and
+		mypay_staff_id=#{mypay_staff_id}
+	</update>
+
+	<update id="payBeforMonth" parameterType="String">
+		UPDATE mypay SET
+		mypay_time=#{payTime} WHERE mypay_time IS NULL
+	</update>
+
+	<select id="getMyPayByMyPay"
+		resultType="com.nncq.sunmoon.entity.MyPay"
+		parameterType="com.nncq.sunmoon.entity.MyPay">
+		SELECT *
+		FROM mypay WHERE
+		`mypay_moth`=#{mypay_moth} and
+		mypay_staff_id=#{mypay_staff_id}
+	</select>
+
+	<select id="getStaffPayBySe"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.StaffPay">
+		select * from
+		staff_pay_history WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER
+		BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getStaffPayNumberBySe" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from staff_pay_history
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getNowStaffPayBySe"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.StaffPay">
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		`staff_name`,
+		`staff_id`,
+		`work_address_name`,
+		`department_name`,
+		`position_name`,
+		`mypay_time`,
+		CASE mypay_moth
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (
+		date_add(
+		CURRENT_DATE,
+		INTERVAL - 1 MONTH
+		)
+		)
+		) THEN
+		mypay_moth
+		ELSE
+		''
+		END AS mypay_moth,
+		CASE mypay_moth
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (
+		date_add(
+		CURRENT_DATE,
+		INTERVAL - 1 MONTH
+		)
+		)
+		) THEN
+		actual_pay
+		ELSE
+		''
+		END AS actual_pay
+		FROM
+		staff_pay
+		) p
+		WHERE
+		${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getNowStaffPayNumberBySe" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		SELECT
+		count(*)
+		FROM
+		(
+		SELECT
+		`staff_name`,
+		`staff_id`,
+		`work_address_name`,
+		`department_name`,
+		`position_name`,
+		`mypay_time`,
+		CASE mypay_moth
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (
+		date_add(
+		CURRENT_DATE,
+		INTERVAL - 1 MONTH
+		)
+		)
+		) THEN
+		mypay_moth
+		ELSE
+		''
+		END AS mypay_moth,
+		CASE mypay_moth
+		WHEN CONCAT(
+		CONCAT(YEAR(CURRENT_DATE), '-'),
+		MONTH (
+		date_add(
+		CURRENT_DATE,
+		INTERVAL - 1 MONTH
+		)
+		)
+		) THEN
+		actual_pay
+		ELSE
+		''
+		END AS actual_pay
+		FROM
+		staff_pay
+		) p
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+</mapper>

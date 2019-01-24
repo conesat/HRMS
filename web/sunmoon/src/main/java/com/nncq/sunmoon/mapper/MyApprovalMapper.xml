@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.MyApprovalDao">
+	<select id="selectAll"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.Apply">
+		select * from
+		apply WHERE
+		${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order}
+		limit
+		#{start},#{limit};
+	</select>
+
+	<select id="getmyApprovalNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from
+		apply
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%');
+	</select>
+	<select id="selectApplyByID"  resultType="com.nncq.sunmoon.entity.Apply"
+		parameterType="String">
+		select * from apply where apply_id=#{apply_id}
+		</select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.ApplyDao">
+	<insert id="addApply"
+		parameterType="com.nncq.sunmoon.entity.Apply">
+		INSERT INTO apply
+		(apply_id,apply_name,apply_type,parent_id,apply_staff_id,apply_time,check_state)VALUES(
+		#{apply_id},#{apply_name},#{apply_type},#{parent_id},#{apply_staff_id},#{apply_time},#{check_state});
+	</insert>
+
+	<update id="checkApply"
+		parameterType="com.nncq.sunmoon.entity.Apply">
+		update apply set
+		check_staff_id=#{check_staff_id},check_state=#{check_state},check_msg=#{check_msg},check_time=#{check_time}
+		where apply_id= #{apply_id}
+	</update>
+
+	<select id="getLastId" resultType="String">
+		select apply_id from
+		apply
+		order by
+		apply_id DESC limit 1;
+	</select>
+
+	<select id="getPastLeaveApply"
+		parameterType="com.nncq.sunmoon.entity.Leave"
+		resultType="com.nncq.sunmoon.entity.Leave">
+		SELECT * FROM staff_leave_apply_view
+		WHERE
+		TO_DAYS(staff_leave_apply_view.leave_start_time) &lt;=TO_DAYS(#{leave_start_time})
+		AND
+		TO_DAYS(staff_leave_apply_view.leave_end_time) &gt;=TO_DAYS(#{leave_start_time})
+		AND check_state ='已通过'
+		AND
+		leave_staff_id=#{leave_staff_id}
+	</select>
+
+	<select id="getApplyById"
+		resultType="com.nncq.sunmoon.entity.Apply" parameterType="String">
+		select * from
+		apply where apply_id=#{id}
+	</select>
+	<select id="getPassQuitApply" resultType="String">
+		SELECT apply_staff_id FROM apply WHERE apply_type='staff_quit_apply' and check_state='已通过' and
+		DATE_ADD(check_time,INTERVAL 2 MINUTE)&lt;sysdate()
+	</select>
+</mapper>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>发布招聘信息</title>
+<style>
+#box1{
+    width:800px;
+    height:100px;
+    border:2px red solid;
+    position:absolute;
+    left:150px;
+    top:50px;
+    
+}
+#box2{
+    width:800px;
+    height:200px;
+    border:2px red solid;
+    position:absolute;
+    left:150px;
+    top:150px;
+
+}
+#box3{
+    width:800px;
+    height:200px;
+    border:2px red solid;
+    position:absolute;
+    left:150px;
+    top:350px;
+
+}
+#box4{
+    width:800px;
+    height:100px;
+    border:2px red solid;
+    position:absolute;
+    left:150px;
+    top:550px;
+
+}
+
+
+</style>
+<link rel="stylesheet" href="layui/css/layui.css">
+<link rel="stylesheet" href="res/css/my.css">
+<link rel="stylesheet" href="res/css/login.css">
+<link rel="stylesheet" media="screen and (min-width:1200px)"
+	href="res/css/max.css">
+<link rel="stylesheet"
+	media="screen and (min-width:800px) and (max-width:1200px)"
+	href="res/css/mid.css">
+<link rel="stylesheet" media="screen and (max-width:800px)"
+	href="res/css/min.css">
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+
+		<div class="layui-header">
+			<div class="layui-logo">
+				<div class="logo-icon">
+					<img src='res/image/sun.png' />
+				</div>
+				<div class="cmpany-name">日&月 HRMS</div>
+			</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			
+		</div>
+
+
+		<div class="layui-body" id='body-div'>
+			<!-- 内容主体区域 -->
+            
+
+    </div>
+    <div id="box1" >
+        <p>项目名称:</p><input type="text">
+        <p>笔试题目:</p>
+        <select >
+            <option value="volvo">Volvoxxxxxxx</option>
+            <option value="saab">Saab</option>
+            <option value="opel">Opel</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
+        <div id="box2" >
+            <p>招聘轮播图上传</p>
+            <button type="button" class="layui-btn" id="test1">
+                <i class="layui-icon">&#xe67c;</i>上传图片
+              </button>
+              <script src="/static/build/layui.js"></script>
+<script>
+layui.use('upload', function(){
+var upload = layui.upload;
+
+//执行实例
+var uploadInst = upload.render({
+elem: '#test1' //绑定元素
+,url: '/upload/' //上传接口
+,done: function(res){
+  //上传完毕回调
+}
+,error: function(){
+  //请求异常回调
+}
+});
+});
+</script>     
+        </div>
+        <div id="box3">
+            <p>招聘内容</p>
+            <textarea rows="10" cols="100">请输入招聘信息</textarea>
+            
+        </div>
+        <div id="box4">
+            <p>招聘职位</p>
+
+        </div>
+        <input type="image" value="保存" >
+        
+
+    </div>
+	<script src="layui/layui.js"></script>
+	<script>
+		//JavaScript代码区域
+		layui.use([ 'element', 'jquery', 'form', 'layer' ], function() {
+			var element = layui.element;
+			var $ = jQuery = layui.jquery;
+			var form = layui.form;
+			var layer = layui.layer;
+        
+
+		});
+	</script>
+</body>
+</html>

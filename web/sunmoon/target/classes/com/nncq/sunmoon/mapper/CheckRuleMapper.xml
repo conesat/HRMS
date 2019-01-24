@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.CheckRuleDao">
+
+	<update id="updateRule"
+		parameterType="com.nncq.sunmoon.entity.CheckRule">
+		update check_rule set
+		rule1=#{rule1},rule2=#{rule2},rule3=#{rule3},rule4=#{rule4},rule5=#{rule5},rule6=#{rule6}
+		where id= 0;
+	</update>
+
+
+	<select id="getRule"
+		resultType="com.nncq.sunmoon.entity.CheckRule">
+		select * from
+		check_rule where id=0;
+	</select>
+
+</mapper>

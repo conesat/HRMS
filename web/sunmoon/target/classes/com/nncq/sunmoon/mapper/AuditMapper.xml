@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.AuditDao">
+
+	<update id="updateApply"
+		parameterType="com.nncq.sunmoon.entity.Apply">
+		UPDATE apply
+		SET
+		check_staff_id=#{check_staff_id},check_time=#{check_time},check_state=#{check_state},check_msg=#{check_msg}
+		WHERE
+		apply_id=#{apply_id};
+	</update>
+	
+	<select id="getLeaveBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.LeaveView">
+		select * from
+		apply_leave_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+		<select id="getLeaveNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_leave_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getLeaveById"
+		resultType="com.nncq.sunmoon.entity.LeaveView" parameterType="String">
+		select *
+		from apply_leave_view
+		where apply_id=#{apply_id};
+	</select>
+
+
+	<select id="getEvectionBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.EvectionView">
+		select * from
+		apply_evection_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+		<select id="getEvectionNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_evection_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getEvectionById"
+		resultType="com.nncq.sunmoon.entity.EvectionView" parameterType="String">
+		select *
+		from apply_evection_view
+		where apply_id=#{apply_id};
+	</select>
+	
+	<select id="getTransferBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.TransferView">
+		select * from
+		apply_transfer_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+		<select id="getTransferNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_transfer_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getTransferById"
+		resultType="com.nncq.sunmoon.entity.TransferView" parameterType="String">
+		select *
+		from apply_transfer_view
+		where apply_id=#{apply_id};
+	</select>
+	
+		
+	<select id="getOverTimeBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.OverTimeView">
+		select * from
+		apply_overtime_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+	<select id="getOverTimeNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_overtime_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getOverTimeById"
+		resultType="com.nncq.sunmoon.entity.OverTimeView" parameterType="String">
+		select *
+		from apply_overtime_view
+		where apply_id=#{apply_id};
+	</select>
+			
+			
+	<select id="getExpenseBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.ExpenseView">
+		select * from
+		apply_expense_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+	<select id="getExpenseNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_expense_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getExpenseById"
+		resultType="com.nncq.sunmoon.entity.ExpenseView" parameterType="String">
+		select *
+		from apply_expense_view
+		where apply_id=#{apply_id};
+	</select>
+	
+	
+	
+	<select id="getQuitBySE"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity"
+		resultType="com.nncq.sunmoon.entity.QuitView">
+		select * from
+		apply_quit_view WHERE ${sql} LIKE
+		concat(concat('%',#{key}),'%')
+		ORDER BY
+		${field}
+		${order} limit
+		#{start},#{limit};
+	</select>
+	
+	<select id="getQuitNumberBySE" resultType="int"
+		parameterType="com.nncq.sunmoon.tools.entity.SelectEntity">
+		select count(*) from apply_quit_view
+		WHERE
+		${sql}
+		LIKE
+		concat(concat('%',#{key}),'%')
+	</select>
+
+	<select id="getQuitById"
+		resultType="com.nncq.sunmoon.entity.QuitView" parameterType="String">
+		select *
+		from apply_quit_view
+		where apply_id=#{apply_id};
+	</select>
+	
+	
+
+</mapper>

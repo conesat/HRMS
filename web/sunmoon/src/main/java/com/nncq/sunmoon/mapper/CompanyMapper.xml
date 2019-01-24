@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nncq.sunmoon.dao.CompanyDao">
+
+	<select id="selectCompany"
+		resultType="com.nncq.sunmoon.entity.Company">
+		SELECT * from company
+	</select>
+
+	<update id="updateCompany"
+		parameterType="com.nncq.sunmoon.entity.Company">
+		UPDATE company SET
+		company_name=#{company_name},company_address=#{company_address},
+		company_phone=#{company_phone},company_fax=#{company_fax},company_msg=#{company_msg},
+		company_net=#{company_net} where company_id='1'
+
+	</update>
+
+	<update id="updateSalaryBase"
+		parameterType="Float">
+		UPDATE company SET
+		salary_base=#{salary_base} where company_id='1'
+	</update>
+
+</mapper>
