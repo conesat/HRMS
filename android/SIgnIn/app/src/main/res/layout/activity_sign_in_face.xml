@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee">
+
+
+
+    <com.guo.android_extend.widget.CameraSurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
+    <com.guo.android_extend.widget.CameraGLSurfaceView
+        android:id="@+id/glsurfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <com.nncq.signin.view.ArcView
+        android:id="@+id/arcView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#199ade">
+
+        <ImageView
+            android:id="@+id/face_back"
+            android:layout_width="22dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/arrow_left"
+            android:tint="#fff" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="35dp"
+            android:gravity="center"
+            android:text="面部签到"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<ImageView
+    android:background="#eee"
+    android:layout_marginTop="35dp"
+    android:id="@+id/test_FACE"
+    android:layout_width="100dp"
+    android:layout_height="150dp" />
+</RelativeLayout>
